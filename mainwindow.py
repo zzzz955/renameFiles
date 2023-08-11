@@ -121,31 +121,37 @@ class FileRenamer(QMainWindow):
 
     def dropEvent(self, event):
         # 파일 드랍 이벤트 함수
-        urls = event.mimeData().urls()
-        file_paths = []
-        for url in urls:
-            file_path = url.toLocalFile()
-            file_paths.append(file_path)
-        if QFileInfo(file_paths[0]).isDir():
-            self.folder_path = file_paths[0]
-            self.check_filelist.uploaded_file_list.clear()
-            self.image_files = [file for file in os.listdir(file_paths[0]) if
-                           file.lower().endswith((".png", ".jpg", ".jpeg", ".gif"))]
-            self.check_filelist.uploaded_file_list.clear()
-            self.check_filelist.uploaded_file_list.addItems(self.image_files)
-            image_files = [os.path.join(file_paths[0], filename) for filename in os.listdir(file_paths[0]) if
-                           filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif"))]
-            self.get_image_val = classifyImages.get_image_datas(image_files)
-            self.check_filelist.label_count.setText(f'{self.check_filelist.uploaded_file_list.count()}개 항목 업로드')
-        else:
-            self.file_paths = file_paths
-            self.check_filelist.uploaded_file_list.clear()
-            self.image_files = []
-            for file in self.file_paths:
-                self.image_files.append(os.path.basename(file))
-            self.check_filelist.uploaded_file_list.addItems(self.image_files)
-            self.get_image_val = classifyImages.get_image_datas(self.file_paths)
-            self.check_filelist.label_count.setText(f'{self.check_filelist.uploaded_file_list.count()}개 항목 업로드')
+        try:
+            urls = event.mimeData().urls()
+            file_paths = []
+            for url in urls:
+                file_path = url.toLocalFile()
+                file_paths.append(file_path)
+            if QFileInfo(file_paths[0]).isDir():
+                self.folder_path = file_paths[0]
+                self.check_filelist.uploaded_file_list.clear()
+                self.image_files = [file for file in os.listdir(file_paths[0]) if
+                               file.lower().endswith((".png", ".jpg", ".jpeg", ".gif"))]
+                self.check_filelist.uploaded_file_list.clear()
+                self.check_filelist.uploaded_file_list.addItems(self.image_files)
+                image_files = [os.path.join(file_paths[0], filename) for filename in os.listdir(file_paths[0]) if
+                               filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif"))]
+                self.get_image_val = classifyImages.get_image_datas(image_files)
+                self.check_filelist.label_count.setText(f'{self.check_filelist.uploaded_file_list.count()}개 항목 업로드')
+            else:
+                self.file_paths = file_paths
+                self.check_filelist.uploaded_file_list.clear()
+                self.image_files = []
+                for file in self.file_paths:
+                    if file.lower().endswith((".png", ".jpg", ".jpeg", ".gif")):
+                        self.image_files.append(os.path.basename(file))
+                    else:
+                        return
+                self.check_filelist.uploaded_file_list.addItems(self.image_files)
+                self.get_image_val = classifyImages.get_image_datas(self.file_paths)
+                self.check_filelist.label_count.setText(f'{self.check_filelist.uploaded_file_list.count()}개 항목 업로드')
+        except Exception as e:
+            print(e)
 
     def upload_folder(self):
         # 폴더 업로드 함수
