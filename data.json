@@ -1,0 +1,40 @@
+{
+  "datas": [
+    {
+      "width_size": "580",
+      "height_size": "666",
+      "replace_val": "YYMMDD_Forum"
+    },
+    {
+      "width_size": "1280",
+      "height_size": "500",
+      "replace_val": "YYMMDD_rol"
+    },
+    {
+      "width_size": "1280",
+      "height_size": "960",
+      "replace_val": "YYMMDD_web"
+    },
+    {
+      "width_size": "320",
+      "height_size": "130",
+      "replace_val": "YYMMDD_thumb"
+    }
+  ],
+  "criteria_val": [
+    "_cn",
+    "_ar",
+    "_tr",
+    "_tw",
+    "_th",
+    "_ru",
+    "_pt",
+    "_kr",
+    "_it",
+    "_id",
+    "_fr",
+    "_es",
+    "_en",
+    "_de"
+  ]
+}
